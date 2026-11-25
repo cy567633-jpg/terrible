@@ -1,13 +1,44 @@
-<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>页面检查</title>
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#000"><title>检查页面</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#050505;color:#eee;font-family:system-ui,"Microsoft YaHei",sans-serif;overflow:hidden}.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:22px}#intro{background:#fff;color:#222;justify-content:flex-start;align-items:flex-start;padding:8vh 8vw}h1{font-size:clamp(25px,6vw,38px)}p{font-size:clamp(16px,4vw,20px);line-height:1.8}button{border:0;border-radius:8px;padding:14px 22px;font-size:18px;touch-action:manipulation}#go{background:#a00;color:#fff;font-weight:bold}#stage{display:none;background:#080808;flex-direction:column;text-align:center}#exit{position:absolute;top:14px;right:14px;background:#252525;color:#ddd;font-size:14px}#wait{font-size:24px;color:#aaa}#hint{color:#666}#scare{display:none;background:#000;z-index:5;padding:0;animation:flash .1s 6}.face{position:relative;width:min(94vw,94vh);height:min(94vw,94vh);background:radial-gradient(ellipse at 50% 35%,#eee 0,#c9c4bd 38%,#555 67%,#090909 78%);border-radius:48%;overflow:hidden}.hair{position:absolute;top:-3%;left:5%;width:90%;height:34%;background:#090909;clip-path:polygon(0 0,100% 0,96% 75%,78% 52%,65% 100%,50% 54%,35% 100%,20% 53%,5% 80%)}.eye{position:absolute;top:34%;width:25%;height:22%;background:#050505;border-radius:50%;box-shadow:inset 0 0 22px #300}.eye:after{content:"";position:absolute;top:36%;left:40%;width:22%;height:28%;background:#eee;border-radius:50%;box-shadow:0 0 18px white}.left{left:14%}.right{right:14%}.brow{position:absolute;top:29%;width:30%;height:8%;background:#111;border-radius:50%}.nose{position:absolute;top:48%;left:43%;width:14%;height:18%;background:linear-gradient(90deg,#555,#ddd,#555);clip-path:polygon(50% 0,0 100%,100% 100%)}.mouth{position:absolute;top:64%;left:22%;width:56%;height:26%;background:#050505;border-radius:48%;box-shadow:inset 0 0 18px #900;overflow:hidden}.teeth{position:absolute;top:0;left:5%;width:90%;height:23%;background:#eee;clip-path:polygon(0 0,100% 0,95% 100%,85% 70%,75% 100%,65% 70%,55% 100%,45% 70%,35% 100%,25% 70%,15% 100%,5% 70%)}.lower{position:absolute;bottom:0;left:5%;width:90%;height:20%;background:#ddd;clip-path:polygon(0 100%,100% 100%,95% 0,85% 35%,75% 0,65% 35%,55% 0,45% 35%,35% 0,25% 35%,15% 0,5% 35%)}@keyframes flash{25%,75%{filter:brightness(2.5)}}
-</style><body>
-<div id="intro" class="screen"><div><h1>⚠️ 惊吓内容预警</h1><p>本页面可能出现突发恐怖画面与音效。<br>确认周围环境安全、音量适当后再继续。</p><button id="go">我已知晓，继续</button></div></div>
-<div id="stage" class="screen"><button id="exit">退出</button><div id="wait">准备中…</div><p id="hint">请等待页面检查完成</p></div>
-<div id="scare" class="screen"><div class="face"><div class="hair"></div><div class="brow left"></div><div class="brow right"></div><div class="eye left"></div><div class="eye right"></div><div class="nose"></div><div class="mouth"><div class="teeth"></div><div class="lower"></div></div></div></div>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#000;color:#ddd;font-family:Arial,"Microsoft YaHei",sans-serif;overflow:hidden}
+.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#warning{background:#f7f7f7;color:#222;align-items:flex-start;padding:9vh 8vw}
+#warning h1{font-size:clamp(24px,7vw,38px);color:#161616}#warning p{font-size:17px;line-height:1.8}
+button{border:0;border-radius:8px;padding:14px 22px;font-size:18px;touch-action:manipulation}#start{background:#222;color:#fff}
+#wait{display:none;background:#080808;flex-direction:column;gap:18px;text-align:center}
+#status{font-family:monospace;color:#aaa;font-size:18px;letter-spacing:1px}
+#small{font-size:13px;color:#444}
+#exit{position:absolute;top:12px;right:12px;background:#222;color:#bbb;font-size:13px;padding:9px}
+#scare{display:none;z-index:10;background:#000;overflow:hidden}
+#scene{position:absolute;width:100vw;height:100vh;display:grid;place-items:center;transform:scale(1.15)}
+#face{position:relative;width:min(110vw,110vh);height:min(110vw,110vh);border-radius:48%;background:radial-gradient(ellipse at 50% 30%,#c5c3bb 0,#77766f 27%,#333 48%,#030303 72%);filter:contrast(1.6) grayscale(1);box-shadow:0 0 60px #fff}
+#hair{position:absolute;inset:-7% -4% 58%;background:#000;border-radius:45% 55% 10% 10%;clip-path:polygon(0 0,100% 0,92% 80%,83% 45%,70% 100%,58% 35%,48% 100%,35% 38%,24% 92%,13% 45%,4% 88%)}
+.eye{position:absolute;top:31%;width:30%;height:22%;background:#050505;border-radius:50%;box-shadow:0 0 18px 5px #000,inset 0 0 20px #500}
+.eye:before{content:"";position:absolute;width:18%;height:35%;left:43%;top:35%;background:#eee;border-radius:50%;box-shadow:0 0 15px #fff}
+#eye1{left:9%;transform:rotate(-13deg)}#eye2{right:9%;transform:rotate(13deg)}
+.brow{position:absolute;top:26%;width:36%;height:10%;background:#080808;border-radius:50%}
+#b1{left:7%;transform:rotate(16deg)}#b2{right:7%;transform:rotate(-16deg)}
+#nose{position:absolute;top:45%;left:39%;width:22%;height:22%;background:linear-gradient(90deg,#222,#bbb,#111);clip-path:polygon(50% 0,5% 100%,95% 100%)}
+#mouth{position:absolute;top:62%;left:17%;width:66%;height:30%;background:#020202;border-radius:45%;box-shadow:0 0 20px #900;overflow:hidden;border:3px solid #111}
+#upper,#lower{position:absolute;left:3%;width:94%;height:22%;background:#ddd}
+#upper{top:0;clip-path:polygon(0 0,100% 0,92% 100%,80% 70%,70% 100%,60% 65%,50% 100%,40% 65%,30% 100%,20% 65%,10% 100%)}#lower{bottom:0;clip-path:polygon(0 100%,100% 100%,90% 0,80% 40%,70% 0,60% 40%,50% 0,40% 40%,30% 0,20% 40%,10% 0)}
+#overlay{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+#scare.active #scene{animation:approach .85s cubic-bezier(.2,.8,.1,1) forwards,shake .08s 10 .9s}
+#scare.active #face{animation:distort .11s 12 .1s}
+#scare.active #overlay{animation:flash .09s 8}
+@keyframes approach{0%{transform:scale(.18) translateY(15vh);filter:blur(8px)}55%{transform:scale(1.45);filter:blur(0)}100%{transform:scale(1.08)}}
+@keyframes shake{0%{transform:translate(0)}25%{transform:translate(12px,-7px)}50%{transform:translate(-10px,8px)}75%{transform:translate(8px,4px)}100%{transform:translate(0)}}
+@keyframes distort{0%{transform:scale(1)}50%{transform:scale(1.08,.93) rotate(1deg)}100%{transform:scale(1)}}
+@keyframes flash{0%,100%{opacity:0}50%{opacity:.65}}
+#scare.active{animation:redblink .13s 7}
+@keyframes redblink{50%{background:#600}}
+#replay{position:absolute;bottom:20px;z-index:15;display:none;background:#202020;color:#eee;font-size:14px}
+</style></head>
+<body>
+<div id="warning" class="screen"><div><h1>⚠️ 惊吓内容预警</h1><p>本页面可能包含突然出现的惊吓画面与音效。<br>请确认环境安全，避免佩戴耳机时使用。</p><button id="start">我已知晓，继续</button></div></div>
+<div id="wait" class="screen"><button id="exit">退出</button><div id="status">正在验证页面完整性…</div><div id="small">请保持页面打开</div></div>
+<div id="scare" class="screen"><div id="scene"><div id="face"><div id="hair"></div><div class="brow" id="b1"></div><div class="brow" id="b2"></div><div class="eye" id="eye1"></div><div class="eye" id="eye2"></div><div id="nose"></div><div id="mouth"><div id="upper"></div><div id="lower"></div></div></div></div><div id="overlay"></div><button id="replay">返回</button></div>
 <script>
-(function(){let timer=null,interval=null,audio=null,done=false;const intro=document.getElementById('intro'),stage=document.getElementById('stage'),scare=document.getElementById('scare'),wait=document.getElementById('wait');
-function trigger(){if(done)return;done=true;clearTimeout(timer);clearInterval(interval);scare.style.display='flex';try{if(!audio)audio=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();let dur=1.2,b=audio.createBuffer(1,Math.floor(audio.sampleRate*dur),audio.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,.4);let s=audio.createBufferSource(),f=audio.createBiquadFilter(),g=audio.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=1300;f.Q.value=.7;g.gain.setValueAtTime(.001,audio.currentTime);g.gain.linearRampToValueAtTime(.2,audio.currentTime+.04);g.gain.linearRampToValueAtTime(.001,audio.currentTime+dur);s.connect(f);f.connect(g);g.connect(audio.destination);s.start()}catch(err){}}
-document.getElementById('go').onclick=function(){intro.style.display='none';stage.style.display='flex';try{audio=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume()}catch(err){}let remaining=18+Math.floor(Math.random()*12);wait.textContent='请稍候… '+remaining+' 秒';interval=setInterval(function(){remaining--;wait.textContent='请稍候… '+Math.max(remaining,0)+' 秒';if(remaining<=0)trigger()},1000);timer=setTimeout(trigger,31000)};
-document.getElementById('exit').onclick=function(){done=false;clearTimeout(timer);clearInterval(interval);scare.style.display='none';stage.style.display='none';intro.style.display='flex';if(audio){try{audio.close()}catch(e){}audio=null}}})();
-</script></body></html>
+(()=>{let timer,ctx,started=false;const warning=document.getElementById('warning'),wait=document.getElementById('wait'),scare=document.getElementById('scare'),status=document.getElementById('status');
+function shriek(){try{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();ctx.resume();let now=ctx.currentTime;let osc=ctx.createOscillator(),osc2=ctx.createOscillator(),gain=ctx.createGain(),filter=ctx.createBiquadFilter();osc.type='sawtooth';osc.frequency.setValueAtTime(750,now);osc.frequency.exponentialRampT
